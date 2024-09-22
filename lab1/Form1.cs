@@ -116,11 +116,17 @@ namespace lab1
         private void GenerateRegister_Click(object sender, EventArgs e)
         {
             AutoManager autoManager = new AutoManager();
-            AutoRegister auto = autoManager.CreateUniqueItem();
-            auto.WriteAutoRegisterToBinaryFile("autoregister.dat");
+            for (int i = 0; i < 10; i++)
+            {
+                AutoRegister auto = autoManager.CreateUniqueItem();
+                auto.WriteAutoRegisterToBinaryFile("autoregister.dat");
 
-            label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
-
+                if (i == 5)
+                {
+                    label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
+                }
+            }
+            
             // 61Б на одну запись
             long length = new System.IO.FileInfo("autoregister.dat").Length;
             label9.Text = length.ToString() + " Б";
@@ -130,8 +136,10 @@ namespace lab1
         private void CreateIndex_Click(object sender, EventArgs e)
         {
             AutoManager autoManager = new AutoManager();
-            AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
-            label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
+            //AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
+            //label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
+            AutoRegister auto = autoManager.ReadOneFromBinaryFile("autoregister.dat");
+            label12.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
