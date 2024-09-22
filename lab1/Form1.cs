@@ -13,6 +13,99 @@ using System.Windows.Forms;
 
 namespace lab1
 {
+    class AutoRegister
+    {
+        public string Number { get; set; }
+        public string Model { get; set; }
+        public int IssueDate { get; set; }
+        public int SellDate { get; set; }
+        public string Color { get; set; }
+        public string Owner { get; set; }
+
+
+        public AutoRegister(string number, string model, int issueDate, int sellDate, string color, string owner)
+        {
+            Number = number; Model = model; IssueDate = issueDate; SellDate = sellDate; Color = color; Owner = owner;
+        }
+        public AutoRegister()
+        {
+            Number = ""; Model = ""; IssueDate = 0; SellDate = 0; Color = ""; Owner = "";
+        }
+        public void WriteAutoRegisterToBinaryFile(string fileName)
+        {
+            using (BinaryWriter writer = new BinaryWriter(File.Open(fileName, FileMode.Append)))
+            {
+                // Записываем поля класса в файл
+                writer.Write(this.Number);
+                writer.Write(this.Model);
+                writer.Write(this.IssueDate);
+                writer.Write(this.SellDate);
+                writer.Write(this.Color);
+                writer.Write(this.Owner);
+            }
+        }       
+    }
+
+    class AutoManager
+    {
+        private HashSet<string> existingIds = new HashSet<string>();
+        private Random random = new Random();
+
+        public AutoRegister CreateUniqueItem()
+        {
+            string number;
+
+            // Генерируем уникальный Number
+            do
+            {
+                number = "А" + random.Next(100, 1000).ToString() + "МВ" + random.Next(10, 100).ToString(); ; // Генерация случайного Number
+            } while (!existingIds.Add(number)); // Проверка на уникальность
+
+            return new AutoRegister(number, "Форд", 19920701, 20030802, "Зелёный", "Владелец");
+        }
+
+        public AutoRegister ReadOneFromBinaryFile(string fileName)
+        {
+            AutoRegister readAuto = new AutoRegister();
+            using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            {
+                readAuto.Number = reader.ReadString();
+                readAuto.Model = reader.ReadString();
+                readAuto.IssueDate = reader.ReadInt32();
+                readAuto.SellDate = reader.ReadInt32();
+                readAuto.Color = reader.ReadString();
+                readAuto.Owner = reader.ReadString();
+            }
+
+            return readAuto;
+        }
+
+        public AutoRegister[] ReadAllFromBinaryFile(string fileName)
+        {
+            int i = 0;
+            List<AutoRegister> list = new List<AutoRegister>();
+            list[i] = new AutoRegister();
+
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var reader = new BinaryReader(stream))
+            {
+                bool endOfStream = stream.Position == stream.Length;
+                while (!endOfStream)
+                {
+                    list[i] = ReadOneFromBinaryFile(fileName);
+                    i++;
+                }
+            }
+            return list.ToArray();  
+        }
+    }
+
+    class ARIndex
+    {
+        public string arNumber { get; set; }
+        public long arAddress { get; set; }
+    }
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -22,64 +115,23 @@ namespace lab1
 
         private void GenerateRegister_Click(object sender, EventArgs e)
         {
-            // создаем объект BinaryFormatter
-            BinaryFormatter formatter = new BinaryFormatter();
-            AutoRegister[] autoreg = new AutoRegister[10000];
-            Random rndNumber = new Random();
+            AutoManager autoManager = new AutoManager();
+            AutoRegister auto = autoManager.CreateUniqueItem();
+            auto.WriteAutoRegisterToBinaryFile("autoregister.dat");
 
-            for (int i = 0; i < 10000; i++)
-            {    
-                string owner = "Владелец" + i.ToString();
-                string number = "А" + rndNumber.Next(100, 1000).ToString() + "МВ" + rndNumber.Next(10, 100).ToString();
-                autoreg[i] = new AutoRegister();
-                autoreg[i].Number = number;
-                autoreg[i].Model = "Форд";
-                autoreg[i].IssueDate = 19920701;
-                autoreg[i].SellDate = 20030802;
-                autoreg[i].Color = "Зелёный";
-                autoreg[i].Owner = owner;
-            }
-            label11.Text = autoreg[5].Number + " " + autoreg[5].Model + " " + autoreg[5].Owner;
-            label12.Text = autoreg[150].Number + " " + autoreg[150].Model + " " + autoreg[150].Owner;
-            label13.Text = autoreg[1500].Number + " " + autoreg[1500].Model + " " + autoreg[1500].Owner;
+            label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
 
-            // получаем поток, куда будем записывать сериализованный объект
-            using (FileStream fs = new FileStream("autoregister.dat", FileMode.Append))
-            {
-                formatter.Serialize(fs, autoreg);
-                fs.Close();
-            }
-
+            // 61Б на одну запись
             long length = new System.IO.FileInfo("autoregister.dat").Length;
-            label9.Text = (length / 1024).ToString() + " КБ";
+            label9.Text = length.ToString() + " Б";
 
         }
 
         private void CreateIndex_Click(object sender, EventArgs e)
         {
-            // создаем объект BinaryFormatter
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            // десериализация из файла
-            using (FileStream fs = new FileStream("autoregister.dat", FileMode.Open))
-            {
-                AutoRegister[] loadedRegister = (AutoRegister[])formatter.Deserialize(fs);
-                ARIndex[] index = new ARIndex[10000];
-                var i = 0;
-
-                foreach (AutoRegister ar in loadedRegister)
-                {
-                    index[i] = new ARIndex();
-                    index[i].arNumber = ar.Number;
-                    index[i].arAddress = fs.Position;
-                    i++;
-                }
-
-                label11.Text = index[5].arAddress.ToString() + " " + index[5].arNumber;
-                label12.Text = index[150].arAddress.ToString() + " " + index[150].arNumber;
-                label13.Text = index[1500].arAddress.ToString() + " " + index[1500].arNumber;
-            }
-
+            AutoManager autoManager = new AutoManager();
+            AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
+            label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
