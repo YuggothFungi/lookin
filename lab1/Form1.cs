@@ -1,18 +1,90 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace lab1
 {
+    public partial class Form1 : Form
+    {
+        string FILE_NAME = "autoregister.dat";
+        int RECORD_SIZE = 61;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void GenerateRegister_Click(object sender, EventArgs e)
+        {
+            AutoManager autoManager = new AutoManager();
+            for (int i = 0; i < 10; i++)
+            {
+                AutoRegister auto = autoManager.CreateUniqueItem();
+                auto.WriteAutoRegisterToBinaryFile(FILE_NAME);
+
+                if (i == 5)
+                {
+                    label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
+                }
+            }
+            
+            // 61Б на одну запись
+            label9.Text = GetFileLength(FILE_NAME).ToString() + " Б";
+
+        }
+
+        private void CreateIndex_Click(object sender, EventArgs e)
+        {
+            AutoManager autoManager = new AutoManager();
+            //AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
+            //label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
+
+            long length = GetFileLength(FILE_NAME);
+            for (int i=0; i < length; i+=RECORD_SIZE)
+            {
+                AutoRegister auto = autoManager.ReadOneFromBinaryFile(FILE_NAME, i);
+                if (i == RECORD_SIZE*2)
+                {
+                    label12.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
+                }
+            }
+        }
+
+        private long GetFileLength(string file)
+        {
+            long length = new System.IO.FileInfo(file).Length;
+            return length;
+        }
+
+        private long GetNumberOfRecords(string file)
+        {
+            long numberOfRecords = GetFileLength(file) / RECORD_SIZE;
+            return numberOfRecords;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void IndexSearch_Click(object sender, EventArgs e)
+        {
+            label13.Text = "text";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            File.Delete(FILE_NAME);
+            Application.Exit();
+        }
+    }
+
     class AutoRegister
     {
         public string Number { get; set; }
@@ -43,7 +115,7 @@ namespace lab1
                 writer.Write(this.Color);
                 writer.Write(this.Owner);
             }
-        }       
+        }
     }
 
     class AutoManager
@@ -64,11 +136,13 @@ namespace lab1
             return new AutoRegister(number, "Форд", 19920701, 20030802, "Зелёный", "Владелец");
         }
 
-        public AutoRegister ReadOneFromBinaryFile(string fileName)
+        public AutoRegister ReadOneFromBinaryFile(string fileName, long pos)
         {
             AutoRegister readAuto = new AutoRegister();
-            using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (BinaryReader reader = new BinaryReader(stream))
             {
+                stream.Position = pos;
                 readAuto.Number = reader.ReadString();
                 readAuto.Model = reader.ReadString();
                 readAuto.IssueDate = reader.ReadInt32();
@@ -92,11 +166,11 @@ namespace lab1
                 bool endOfStream = stream.Position == stream.Length;
                 while (!endOfStream)
                 {
-                    list[i] = ReadOneFromBinaryFile(fileName);
+                    list[i] = ReadOneFromBinaryFile(fileName, i);
                     i++;
                 }
             }
-            return list.ToArray();  
+            return list.ToArray();
         }
     }
 
@@ -104,57 +178,5 @@ namespace lab1
     {
         public string arNumber { get; set; }
         public long arAddress { get; set; }
-    }
-
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void GenerateRegister_Click(object sender, EventArgs e)
-        {
-            AutoManager autoManager = new AutoManager();
-            for (int i = 0; i < 10; i++)
-            {
-                AutoRegister auto = autoManager.CreateUniqueItem();
-                auto.WriteAutoRegisterToBinaryFile("autoregister.dat");
-
-                if (i == 5)
-                {
-                    label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
-                }
-            }
-            
-            // 61Б на одну запись
-            long length = new System.IO.FileInfo("autoregister.dat").Length;
-            label9.Text = length.ToString() + " Б";
-
-        }
-
-        private void CreateIndex_Click(object sender, EventArgs e)
-        {
-            AutoManager autoManager = new AutoManager();
-            //AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
-            //label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
-            AutoRegister auto = autoManager.ReadOneFromBinaryFile("autoregister.dat");
-            label12.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void IndexSearch_Click(object sender, EventArgs e)
-        {
-            label11.Text = "text";
-        }
     }
 }
