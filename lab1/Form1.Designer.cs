@@ -81,7 +81,6 @@
             this.SearchString.Name = "SearchString";
             this.SearchString.Size = new System.Drawing.Size(260, 41);
             this.SearchString.TabIndex = 2;
-            this.SearchString.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // IndexSearch
             // 
@@ -128,7 +127,6 @@
             this.label2.Size = new System.Drawing.Size(182, 29);
             this.label2.TabIndex = 6;
             this.label2.Text = "Строка поиска";
-            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // label3
             // 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace lab1
@@ -8,7 +9,7 @@ namespace lab1
     public partial class Form1 : Form
     {
         static string FILE_NAME = "autoregister.dat";
-        static int RECORD_SIZE = 61;
+        static int RECORD_SIZE = 61; // 61Б на одну запись
         static long length;
         static long numberOfRecords;
         ARIndex[] register;
@@ -20,7 +21,7 @@ namespace lab1
         private void GenerateRegister_Click(object sender, EventArgs e)
         {
             AutoManager autoManager = new AutoManager();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 AutoRegister auto = autoManager.CreateUniqueItem();
                 auto.WriteAutoRegisterToBinaryFile(FILE_NAME);
@@ -31,9 +32,8 @@ namespace lab1
                 }
             }
             
-            // 61Б на одну запись
             length = GetFileLength(FILE_NAME);
-            numberOfRecords = length / RECORD_SIZE;
+            numberOfRecords = GetNumberOfRecords(FILE_NAME);
             label9.Text = (GetFileLength(FILE_NAME) / 1024).ToString() + " МБ";
             register = new ARIndex[numberOfRecords];
         }
@@ -51,6 +51,9 @@ namespace lab1
             label12.Text = register[2].ArNumber + " " + register[2].ArAddress;
             Array.Sort(register, (x, y) => x.ArNumber.CompareTo(y.ArNumber));
             label13.Text = register[2].ArNumber + " " + register[2].ArAddress;
+            
+
+
         }
 
         private static long GetFileLength(string file)
@@ -63,16 +66,6 @@ namespace lab1
         {
             long numberOfRecords = GetFileLength(file) / RECORD_SIZE;
             return numberOfRecords;
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Label2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void IndexSearch_Click(object sender, EventArgs e)
@@ -193,25 +186,6 @@ namespace lab1
             }
 
             return readAuto;
-        }
-
-        public AutoRegister[] ReadAllFromBinaryFile(string fileName)
-        {
-            int i = 0;
-            List<AutoRegister> list = new List<AutoRegister>();
-            list[i] = new AutoRegister();
-
-            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var reader = new BinaryReader(stream))
-            {
-                bool endOfStream = stream.Position == stream.Length;
-                while (!endOfStream)
-                {
-                    list[i] = ReadOneFromBinaryFile(fileName, i);
-                    i++;
-                }
-            }
-            return list.ToArray();
         }
     }
 
