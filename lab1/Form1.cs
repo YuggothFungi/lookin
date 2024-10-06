@@ -86,6 +86,7 @@ namespace lab1
         private void DumbSearch_Click(object sender, EventArgs e)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
+            int iterationNumber = 0;
 
             AutoManager autoManager = new AutoManager();
             string searchKey = SearchString.Text;
@@ -99,6 +100,7 @@ namespace lab1
                     label12.Text = searchKey;
                     break;
                 }
+                iterationNumber = j;
             }
 
             if (!found)
@@ -106,7 +108,7 @@ namespace lab1
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            label6.Text = elapsedMs.ToString() + "мс";
+            label6.Text = elapsedMs.ToString() + "мс, просмотрено " + iterationNumber.ToString() + " записей";
         }
 
         private void FlushAndExit_Click(object sender, EventArgs e)
