@@ -193,6 +193,7 @@
             this.label8.Size = new System.Drawing.Size(208, 29);
             this.label8.TabIndex = 12;
             this.label8.Text = "Размер индекса:";
+            this.label8.Visible = false;
             // 
             // label9
             // 
@@ -215,6 +216,7 @@
             this.label10.Size = new System.Drawing.Size(67, 29);
             this.label10.TabIndex = 14;
             this.label10.Text = "0 МБ";
+            this.label10.Visible = false;
             // 
             // label11
             // 
