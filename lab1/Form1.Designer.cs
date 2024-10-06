@@ -46,15 +46,16 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.FlushAndExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GenerateRegister
             // 
             this.GenerateRegister.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateRegister.Location = new System.Drawing.Point(41, 95);
+            this.GenerateRegister.Location = new System.Drawing.Point(55, 117);
+            this.GenerateRegister.Margin = new System.Windows.Forms.Padding(4);
             this.GenerateRegister.Name = "GenerateRegister";
-            this.GenerateRegister.Size = new System.Drawing.Size(196, 60);
+            this.GenerateRegister.Size = new System.Drawing.Size(261, 74);
             this.GenerateRegister.TabIndex = 0;
             this.GenerateRegister.Text = "создать 1000 записей";
             this.GenerateRegister.UseVisualStyleBackColor = true;
@@ -63,9 +64,10 @@
             // CreateIndex
             // 
             this.CreateIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CreateIndex.Location = new System.Drawing.Point(41, 172);
+            this.CreateIndex.Location = new System.Drawing.Point(55, 212);
+            this.CreateIndex.Margin = new System.Windows.Forms.Padding(4);
             this.CreateIndex.Name = "CreateIndex";
-            this.CreateIndex.Size = new System.Drawing.Size(196, 60);
+            this.CreateIndex.Size = new System.Drawing.Size(261, 74);
             this.CreateIndex.TabIndex = 1;
             this.CreateIndex.Text = "индексировать файл";
             this.CreateIndex.UseVisualStyleBackColor = true;
@@ -74,18 +76,20 @@
             // SearchString
             // 
             this.SearchString.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.SearchString.Location = new System.Drawing.Point(827, 106);
+            this.SearchString.Location = new System.Drawing.Point(1103, 130);
+            this.SearchString.Margin = new System.Windows.Forms.Padding(4);
             this.SearchString.Name = "SearchString";
-            this.SearchString.Size = new System.Drawing.Size(196, 35);
+            this.SearchString.Size = new System.Drawing.Size(260, 41);
             this.SearchString.TabIndex = 2;
             this.SearchString.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // IndexSearch
             // 
             this.IndexSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.IndexSearch.Location = new System.Drawing.Point(565, 172);
+            this.IndexSearch.Location = new System.Drawing.Point(753, 212);
+            this.IndexSearch.Margin = new System.Windows.Forms.Padding(4);
             this.IndexSearch.Name = "IndexSearch";
-            this.IndexSearch.Size = new System.Drawing.Size(196, 60);
+            this.IndexSearch.Size = new System.Drawing.Size(261, 74);
             this.IndexSearch.TabIndex = 3;
             this.IndexSearch.Text = "искать через индекс";
             this.IndexSearch.UseVisualStyleBackColor = true;
@@ -94,20 +98,23 @@
             // DumbSearch
             // 
             this.DumbSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.DumbSearch.Location = new System.Drawing.Point(565, 249);
+            this.DumbSearch.Location = new System.Drawing.Point(753, 306);
+            this.DumbSearch.Margin = new System.Windows.Forms.Padding(4);
             this.DumbSearch.Name = "DumbSearch";
-            this.DumbSearch.Size = new System.Drawing.Size(196, 60);
+            this.DumbSearch.Size = new System.Drawing.Size(261, 74);
             this.DumbSearch.TabIndex = 4;
             this.DumbSearch.Text = "искать последовательно";
             this.DumbSearch.UseVisualStyleBackColor = true;
+            this.DumbSearch.Click += new System.EventHandler(this.DumbSearch_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(37, 41);
+            this.label1.Location = new System.Drawing.Point(49, 50);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(203, 24);
+            this.label1.Size = new System.Drawing.Size(256, 29);
             this.label1.TabIndex = 5;
             this.label1.Text = "Подготовить данные";
             // 
@@ -115,9 +122,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(561, 113);
+            this.label2.Location = new System.Drawing.Point(748, 139);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 24);
+            this.label2.Size = new System.Drawing.Size(182, 29);
             this.label2.TabIndex = 6;
             this.label2.Text = "Строка поиска";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
@@ -126,9 +134,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(561, 41);
+            this.label3.Location = new System.Drawing.Point(748, 50);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(167, 24);
+            this.label3.Size = new System.Drawing.Size(219, 29);
             this.label3.TabIndex = 7;
             this.label3.Text = "Выполнить поиск";
             // 
@@ -136,9 +145,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(833, 41);
+            this.label4.Location = new System.Drawing.Point(1111, 50);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(190, 24);
+            this.label4.Size = new System.Drawing.Size(245, 29);
             this.label4.TabIndex = 8;
             this.label4.Text = "Затраченное время";
             // 
@@ -146,9 +156,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(833, 199);
+            this.label5.Location = new System.Drawing.Point(1111, 245);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 24);
+            this.label5.Size = new System.Drawing.Size(62, 29);
             this.label5.TabIndex = 9;
             this.label5.Text = "0 мс";
             // 
@@ -156,9 +167,10 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(833, 267);
+            this.label6.Location = new System.Drawing.Point(1111, 329);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 24);
+            this.label6.Size = new System.Drawing.Size(62, 29);
             this.label6.TabIndex = 10;
             this.label6.Text = "0 мс";
             // 
@@ -166,9 +178,10 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(265, 122);
+            this.label7.Location = new System.Drawing.Point(353, 150);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(142, 24);
+            this.label7.Size = new System.Drawing.Size(187, 29);
             this.label7.TabIndex = 11;
             this.label7.Text = "Размер файла:";
             // 
@@ -176,9 +189,10 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(246, 190);
+            this.label8.Location = new System.Drawing.Point(328, 234);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(161, 24);
+            this.label8.Size = new System.Drawing.Size(208, 29);
             this.label8.TabIndex = 12;
             this.label8.Text = "Размер индекса:";
             // 
@@ -186,9 +200,10 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(478, 122);
+            this.label9.Location = new System.Drawing.Point(548, 150);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 24);
+            this.label9.Size = new System.Drawing.Size(67, 29);
             this.label9.TabIndex = 13;
             this.label9.Text = "0 МБ";
             // 
@@ -196,9 +211,10 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.Location = new System.Drawing.Point(478, 190);
+            this.label10.Location = new System.Drawing.Point(548, 234);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 24);
+            this.label10.Size = new System.Drawing.Size(67, 29);
             this.label10.TabIndex = 14;
             this.label10.Text = "0 МБ";
             // 
@@ -206,9 +222,10 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(37, 349);
+            this.label11.Location = new System.Drawing.Point(49, 430);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(48, 24);
+            this.label11.Size = new System.Drawing.Size(62, 29);
             this.label11.TabIndex = 15;
             this.label11.Text = "0 мс";
             // 
@@ -216,9 +233,10 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(37, 387);
+            this.label12.Location = new System.Drawing.Point(49, 476);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(48, 24);
+            this.label12.Size = new System.Drawing.Size(62, 29);
             this.label12.TabIndex = 16;
             this.label12.Text = "0 мс";
             // 
@@ -226,29 +244,31 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(37, 423);
+            this.label13.Location = new System.Drawing.Point(49, 521);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 24);
+            this.label13.Size = new System.Drawing.Size(62, 29);
             this.label13.TabIndex = 17;
             this.label13.Text = "0 мс";
             // 
-            // button1
+            // FlushAndExit
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(565, 387);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(196, 60);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "всё забыть и выйти";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.FlushAndExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FlushAndExit.Location = new System.Drawing.Point(753, 476);
+            this.FlushAndExit.Margin = new System.Windows.Forms.Padding(4);
+            this.FlushAndExit.Name = "FlushAndExit";
+            this.FlushAndExit.Size = new System.Drawing.Size(261, 74);
+            this.FlushAndExit.TabIndex = 18;
+            this.FlushAndExit.Text = "всё забыть и выйти";
+            this.FlushAndExit.UseVisualStyleBackColor = true;
+            this.FlushAndExit.Click += new System.EventHandler(this.FlushAndExit_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 499);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1423, 614);
+            this.Controls.Add(this.FlushAndExit);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -267,6 +287,7 @@
             this.Controls.Add(this.SearchString);
             this.Controls.Add(this.CreateIndex);
             this.Controls.Add(this.GenerateRegister);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Индексный поиск";
             this.ResumeLayout(false);
@@ -294,7 +315,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button FlushAndExit;
     }
 }
 

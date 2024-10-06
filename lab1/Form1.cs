@@ -7,9 +7,11 @@ namespace lab1
 {
     public partial class Form1 : Form
     {
-        string FILE_NAME = "autoregister.dat";
-        int RECORD_SIZE = 61;
-
+        static string FILE_NAME = "autoregister.dat";
+        static int RECORD_SIZE = 61;
+        static long length;
+        static long numberOfRecords;
+        ARIndex[] register;
         public Form1()
         {
             InitializeComponent();
@@ -30,19 +32,16 @@ namespace lab1
             }
             
             // 61Б на одну запись
-            label9.Text = GetFileLength(FILE_NAME).ToString() + " Б";
-
+            length = GetFileLength(FILE_NAME);
+            numberOfRecords = length / RECORD_SIZE;
+            label9.Text = (GetFileLength(FILE_NAME) / 1024).ToString() + " МБ";
+            register = new ARIndex[numberOfRecords];
         }
 
         private void CreateIndex_Click(object sender, EventArgs e)
         {
             AutoManager autoManager = new AutoManager();
-            //AutoRegister[] auto = autoManager.ReadAllFromBinaryFile("autoregister.dat");
-            //label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
-
-            long length = GetFileLength(FILE_NAME);
-            var numberOfRecords = length / RECORD_SIZE;
-            ARIndex[] register = new ARIndex[numberOfRecords];
+           
             for (int i=0; i < numberOfRecords; i+=1)
             {
                 AutoRegister auto = autoManager.ReadOneFromBinaryFile(FILE_NAME, i*RECORD_SIZE);
@@ -54,7 +53,7 @@ namespace lab1
             label13.Text = register[2].ArNumber + " " + register[2].ArAddress;
         }
 
-        private long GetFileLength(string file)
+        private static long GetFileLength(string file)
         {
             long length = new System.IO.FileInfo(file).Length;
             return length;
@@ -78,14 +77,53 @@ namespace lab1
 
         private void IndexSearch_Click(object sender, EventArgs e)
         {
-            label13.Text = "text";
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            string searchKey = SearchString.Text;
+            var searchItem = Array.Find<ARIndex>(register, item => item.ArNumber == searchKey);
+            if (searchItem == null)
+            { label12.Text = "Такого ключа не найдено"; }
+            else
+            { label12.Text = searchKey; }
+            
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            label5.Text = elapsedMs.ToString() + "мс";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void DumbSearch_Click(object sender, EventArgs e)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            AutoManager autoManager = new AutoManager();
+            string searchKey = SearchString.Text;
+            Boolean found = false;
+            for (int j = 0; j < numberOfRecords; j += 1)
+            {
+                AutoRegister auto = autoManager.ReadOneFromBinaryFile(FILE_NAME, j * RECORD_SIZE);
+                found = (auto.Number == searchKey);
+                if (found)
+                { 
+                    label12.Text = searchKey;
+                    break;
+                }
+            }
+
+            if (!found)
+            { label12.Text = "Такого ключа не найдено"; }
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            label6.Text = elapsedMs.ToString() + "мс";
+        }
+
+        private void FlushAndExit_Click(object sender, EventArgs e)
         {
             File.Delete(FILE_NAME);
             Application.Exit();
         }
+
+
     }
 
     class AutoRegister
