@@ -41,14 +41,17 @@ namespace lab1
             //label12.Text = auto[1].Number + " " + auto[1].Model + " " + auto[1].Owner;
 
             long length = GetFileLength(FILE_NAME);
-            for (int i=0; i < length; i+=RECORD_SIZE)
+            var numberOfRecords = length / RECORD_SIZE;
+            ARIndex[] register = new ARIndex[numberOfRecords];
+            for (int i=0; i < numberOfRecords; i+=1)
             {
-                AutoRegister auto = autoManager.ReadOneFromBinaryFile(FILE_NAME, i);
-                if (i == RECORD_SIZE*2)
-                {
-                    label12.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
-                }
+                AutoRegister auto = autoManager.ReadOneFromBinaryFile(FILE_NAME, i*RECORD_SIZE);
+                register[i] = new ARIndex { ArNumber = auto.Number, ArAddress = i*RECORD_SIZE };                
             }
+
+            label12.Text = register[2].ArNumber + " " + register[2].ArAddress;
+            Array.Sort(register, (x, y) => x.ArNumber.CompareTo(y.ArNumber));
+            label13.Text = register[2].ArNumber + " " + register[2].ArAddress;
         }
 
         private long GetFileLength(string file)
@@ -176,7 +179,7 @@ namespace lab1
 
     class ARIndex
     {
-        public string arNumber { get; set; }
-        public long arAddress { get; set; }
+        public string ArNumber { get; set; }
+        public long ArAddress { get; set; }
     }
 }
