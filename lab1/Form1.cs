@@ -20,20 +20,20 @@ namespace lab1
         private void GenerateRegister_Click(object sender, EventArgs e)
         {
             AutoManager autoManager = new AutoManager();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 AutoRegister auto = autoManager.CreateUniqueItem();
                 auto.WriteAutoRegisterToBinaryFile(FILE_NAME);
 
                 if (i == 5)
                 {
-                    label11.Text = auto.Number + " " + auto.Model + " " + auto.Owner;
+                    label11.Text = "Какой-нибудь элемент: " + auto.Number + " " + auto.Model + " " + auto.Owner;
                 }
             }
             
             length = GetFileLength(FILE_NAME);
             numberOfRecords = GetNumberOfRecords(FILE_NAME);
-            label9.Text = (GetFileLength(FILE_NAME) / 1024).ToString() + " МБ";
+            label9.Text = (GetFileLength(FILE_NAME) / 1024).ToString() + " КБ";
             register = new ARIndex[numberOfRecords];
         }
 
@@ -47,9 +47,8 @@ namespace lab1
                 register[i] = new ARIndex { ArNumber = auto.Number, ArAddress = i*RECORD_SIZE };                
             }
 
-            label12.Text = register[2].ArNumber + " " + register[2].ArAddress;
             Array.Sort(register, (x, y) => x.ArNumber.CompareTo(y.ArNumber));
-            label13.Text = register[2].ArNumber + " " + register[2].ArAddress;
+            label13.Text = "Создан индексный массив, вот элемент в массиве: " + register[2].ArNumber + " " + register[2].ArAddress;
             
 
 
@@ -74,9 +73,9 @@ namespace lab1
             string searchKey = SearchString.Text;
             var searchItem = Array.Find<ARIndex>(register, item => item.ArNumber == searchKey);
             if (searchItem == null)
-            { label12.Text = "Такого ключа не найдено"; }
+            { label12.Text = "Результат поиска: такого ключа не найдено"; }
             else
-            { label12.Text = searchKey; }
+            { label12.Text = "Результат поиска: " + searchKey; }
             
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
@@ -97,14 +96,14 @@ namespace lab1
                 found = (auto.Number == searchKey);
                 if (found)
                 { 
-                    label12.Text = searchKey;
+                    label12.Text = "Результат поиска: " + searchKey;
                     break;
                 }
                 iterationNumber = j;
             }
 
             if (!found)
-            { label12.Text = "Такого ключа не найдено"; }
+            { label12.Text = "Результат поиска: такого ключа не найдено"; }
 
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
