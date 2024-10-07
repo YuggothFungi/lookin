@@ -55,7 +55,7 @@ namespace lab1
 
             // Использована стандартная функция Sort для массива, которая обеспечивает упорядочивание массива по возрастанию в лексикографическом порядке.
             Array.Sort(register, (x, y) => x.ArNumber.CompareTo(y.ArNumber));
-            label13.Text = "Создан индексный массив, вот элемент в массиве: " + register[2].ArNumber + " " + register[2].ArAddress;
+            label13.Text = "В индексном массиве элемент " + register[2].ArNumber + " с адресом " + register[2].ArAddress;
             // Теперь индексный массив отсортирован, показываем на экране один из элементов.
         }
 
@@ -116,7 +116,7 @@ namespace lab1
                 found = (auto.Number == searchKey);
                 if (found)
                 { 
-                    label12.Text = "Результат поиска: " + searchKey;
+                    label12.Text = "Результат поиска: " + auto.Number + " " + auto.Model + " " + auto.Owner;
                     break;
                 }
                 iterationNumber = j;
